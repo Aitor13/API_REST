@@ -33,6 +33,7 @@ class schema(mm.Schema):
 esquema = schema()
 esquemas = schema(many=True)
 
+@app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
