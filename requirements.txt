@@ -1,7 +1,6 @@
-Flask
+flask
 gunicorn
 flask_marshmallow
 flask_sqlalchemy
 flask_cors
 psycopg2
-flask.render_template
