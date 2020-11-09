@@ -32,7 +32,7 @@ class schema(mm.Schema):
 esquema = schema()
 esquemas = schema(many=True)
 
-@app.route('/')
+@app.route('/index')
 def index():
     return 'app desde la web'
 
