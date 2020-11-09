@@ -2,4 +2,4 @@ Flask
 gunicorn
 flask_marshmallow
 flask_sqlalchemy
-flask_cors
+flask-cors
