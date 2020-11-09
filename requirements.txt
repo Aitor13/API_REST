@@ -1,6 +1,6 @@
 Flask
 gunicorn
-flask-marshmallow
-flask-sqlalchemy
-flask-cors
+flask_marshmallow
+flask_sqlalchemy
+flask_cors
 pymysql
