@@ -1,10 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 
-
-
+# Hecho en deployment en Heroku
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://tcncwrqssasksf:34dd1a83e2c1f46c16647da84db10691f049fe432ddf7c0a9d99c3be110727ac@ec2-34-251-118-151.eu-west-1.compute.amazonaws.com/d2qkutr0arlq2g'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
@@ -34,7 +33,7 @@ esquemas = schema(many=True)
 
 @app.route('/index')
 def index():
-    return 'app desde la web'
+    return render_template('index.html')
 
 # con esta url instermanos datos desde Heroku por la url
 @app.route('/heroku_insert/<string:nombre>/<string:empresa>')
