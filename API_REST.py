@@ -32,6 +32,10 @@ class schema(mm.Schema):
 esquema = schema()
 esquemas = schema(many=True)
 
+@app.route('/')
+def index():
+    return 'app desde la web'
+
 # devolvemos todos los clientes con esta petición
 @app.route('/clientes', methods=['GET'])
 def get_clientes():
