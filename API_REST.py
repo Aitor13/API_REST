@@ -36,6 +36,14 @@ esquemas = schema(many=True)
 def index():
     return 'app desde la web'
 
+# con esta url instermanos datos desde Heroku por la url
+@app.route('/heroku_insert/<string:nombre>/<string:empresa>')
+def insert_heroku(nombre, empresa):
+    datos_registrados = Clientes(nombre,empresa)
+    db.session.add(datos_registrados)
+    db.session.commit()
+    return esquema.jsonify(datos_registrados)
+
 # devolvemos todos los clientes con esta petición
 @app.route('/clientes', methods=['GET'])
 def get_clientes():
