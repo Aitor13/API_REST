@@ -1,8 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
-import flask
 
 # Hecho en deployment en Heroku
 app = Flask(__name__)
@@ -37,7 +36,7 @@ esquemas = schema(many=True)
 @app.route('/')
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    return render_template('index.html')
 
 # con esta url instermanos datos desde Heroku por la url
 @app.route('/heroku_insert/<string:nombre>/<string:empresa>')
@@ -48,7 +47,7 @@ def insert_heroku(nombre, empresa):
     return esquema.jsonify(datos_registrados)
 
 # devolvemos todos los clientes con esta petición
-@app.route('/clientes', methods=['GET'])
+@app.route('/clientes')
 def get_clientes():
     clientes = Clientes.query.all()
     return esquemas.jsonify(clientes)
@@ -69,7 +68,7 @@ def get_cliente(id):
     resultado = Clientes.query.get(id)
     return esquema.jsonify(resultado) if resultado else jsonify({'error':'dato no existente'})
     
-@app.route('/delete_client/<int:id>', methods=['DELETE'])
+@app.route('/delete_client/<int:id>', methods=['GET'])
 def delete_client(id):
     resultado = Clientes.query.get(id)
     db.session.delete(resultado)
