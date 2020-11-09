@@ -6,7 +6,7 @@ import gunicorn
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://Aitor:Cerdanyola26@localhost/Clientes'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://tcncwrqssasksf:34dd1a83e2c1f46c16647da84db10691f049fe432ddf7c0a9d99c3be110727ac@ec2-34-251-118-151.eu-west-1.compute.amazonaws.com/d2qkutr0arlq2g'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 CORS(app)
 
