@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+import flask
 
 # Hecho en deployment en Heroku
 app = Flask(__name__)
@@ -36,7 +37,7 @@ esquemas = schema(many=True)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return flask.render_template('index.html')
 
 # con esta url instermanos datos desde Heroku por la url
 @app.route('/heroku_insert/<string:nombre>/<string:empresa>')
