@@ -40,8 +40,8 @@ def indice():
     mensaje = ''
     if request.method == 'POST':
         nombre = request.form['nombre']
-        departamento = request.form['departamento']
-        cliente = Clientes(nombre, departamento)
+        empresa = request.form['empresa']
+        cliente = Clientes(nombre, empresa)
         db.session.add(cliente)
         db.session.commit()
         mensaje = 'Registro insertado con éxito!'
