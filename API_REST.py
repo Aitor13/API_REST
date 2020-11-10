@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
@@ -33,10 +33,20 @@ class schema(mm.Schema):
 esquema = schema()
 esquemas = schema(many=True)
 
-@app.route('/')
-@app.route('/indice')
+# En index ya cogermos los datos del formulario web en caso de rellenarse
+@app.route('/',methods=['POST', 'GET'])
+@app.route('/indice', methods=['POST', 'GET'])
 def indice():
-    return render_template('indice.html')
+    mensaje = ''
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        departamento = request.form['departamento']
+        cliente = Clientes(nombre, departamento)
+        db.session.add(cliente)
+        db.session.commit()
+        mensaje = 'Registro insertado con éxito!'
+    return render_template('indice.html',mensaje=mensaje)
+
 
 # con esta url instermanos datos desde Heroku por la url
 @app.route('/heroku_insert/<string:nombre>/<string:empresa>')
@@ -50,7 +60,7 @@ def insert_heroku(nombre, empresa):
 @app.route('/clientes')
 def get_clientes():
     clientes = Clientes.query.all()
-    return esquemas.jsonify(clientes)
+    return render_template('clientes.html', clientes=clientes)
 
 # Insertamos un cliente
 @app.route('/insert_cliente', methods=['POST'])
@@ -74,6 +84,9 @@ def delete_client(id):
     db.session.delete(resultado)
     db.session.commit()
     return jsonify({'message':'registro eliminado'})
+
+# Recoger datos a traves del formulario web
+
 
 if __name__ == '__main__':
     app.run(port=2000)

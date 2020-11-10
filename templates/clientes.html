@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="normalize.css">
+    <title>Clientes en la BD</title>
+</head>
+<body>
+    <h1>Clientes existentes en la BD</h1>
+    <ul>
+        {% for c in clientes %}
+        <li>Nombre: {{c.nombre}} / Empresa: {{c.empresa}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
     <title>Pruebas beta Heroku</title>
 </head>
 <body>
     <h1>Esta es una web de pruebas para el ingreso de datos</h1>
-    <p id="primero">
+    <p id="primero" class="parrafo">
         Con esta aplicación deplegada podemos pasar datos a postgresql a través de la url y sacar los datos registrados en ella
     </p>   
+    <p id="segundo" class="parrafo">
+        También se pueden pasar datos con el formulario web que tienes más abajo
+    </p>
     <h2>Métodos permitidos para ingresar/sacar datos</h2>
     <ul>
         <li>/clientes -> devuelve todos los datos registrados en BD</li>
@@ -18,5 +23,12 @@
         <li>/cliente/id -> devuelve el registro a través de la id pasada por parámetro en la url</li>
         <li>/delete_client/id -> elimina un registro pasando como parámetro la id</li>
     </ul> 
+    <form action="" method="POST" >
+        <input type="text" name='nombre' placeholder="nombre">
+        <input type="text" name='departamento' placeholder="departamento">
+        <input type="submit" label="Enviar">
+    </form>
+    <p>{{mensaje}}</p>
+    <a href="{{url_for('get_clientes')}}">Mostrar todos los datos de la BD</a>
 </body>
 </html>
