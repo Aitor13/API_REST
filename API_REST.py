@@ -34,9 +34,9 @@ esquema = schema()
 esquemas = schema(many=True)
 
 @app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html')
+@app.route('/indice')
+def indice():
+    return render_template('indice.html')
 
 # con esta url instermanos datos desde Heroku por la url
 @app.route('/heroku_insert/<string:nombre>/<string:empresa>')
