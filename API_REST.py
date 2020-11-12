@@ -6,8 +6,8 @@ from flask_cors import CORS
 # Hecho en deployment en Heroku
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://tcncwrqssasksf:34dd1a83e2c1f46c16647da84db10691f049fe432ddf7c0a9d99c3be110727ac@ec2-34-251-118-151.eu-west-1.compute.amazonaws.com/d2qkutr0arlq2g'
-# Dejamos la sentencia para arrancar en local y realizar pruebas
-#app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql+psycopg2://Aitor:Cerdanyola26@localhost/Clientes'
+# Dejamos la instruccion para arrancar en local y realizar pruebas
+#app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql+psycopg2://Aitor:Cerdanyola26@localhost/restaurantes'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 CORS(app)
 
@@ -88,7 +88,7 @@ def get_restaurante(id):
     resultado = Restaurante.query.get(id)
     return esquema.jsonify(resultado) if resultado else jsonify({'error':'dato no existente'})
     
-@app.route('/API/delete_restaurante/<int:id>', methods=['GET'])
+@app.route('/API/delete_restaurante/<int:id>', methods=['DELETE'])
 def delete_client(id):
     resultado = Restaurante.query.get(id)
     db.session.delete(resultado)
