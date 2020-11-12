@@ -5,7 +5,11 @@ from flask_marshmallow import Marshmallow
 
 # Hecho en deployment en Heroku
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql+psycopg2://Aitor:Cerdanyola26@localhost/restaurantes'
+user = 'usuario'
+password = 'password'
+base_datos = 'DB'
+# Para mysql --> mysql+pymysql:// ....
+app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql+psycopg2://{}:{}@localhost/{}'.format(user,password,base_datos)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 
 
