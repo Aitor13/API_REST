@@ -51,22 +51,28 @@ def indice():
     return render_template('indice.html',mensaje=mensaje)
 
 
-# con esta url instermanos datos desde Heroku por la url
-@app.route('/heroku_insert/<string:nombre>/<string:calle>/<string:comida>')
+# con esta url insertamos datos desde Heroku por la url
+@app.route('/API/heroku_insert/<string:nombre>/<string:calle>/<string:comida>')
 def insert_heroku(nombre, calle, comida):
     datos_registrados = Restaurante(nombre, calle, comida)
     db.session.add(datos_registrados)
     db.session.commit()
     return esquema.jsonify(datos_registrados)
 
-# devolvemos todos los clientes con esta petición
-@app.route('/clientes')
+# devolvemos todos los restaurantes con esta petición
+@app.route('/restaurantes')
 def get_restaurantes():
     restaurantes = Restaurante.query.all()
     return render_template('restaurantes.html', restaurantes=restaurantes)
 
+# devolvemos todos los restaurantes como un json
+@app.route('/API/get_restaurantes')
+def get_api_restaurantes():
+    restaurantes = Restaurante.query.all()
+    return esquemas.jsonify(restaurantes)
+    
 # Insertamos un cliente
-@app.route('/insert_restaurante', methods=['POST'])
+@app.route('/API/insert_restaurante', methods=['POST'])
 def insert_clientes():
     nombre = request.json['nombre']
     calle = request.json['calle']
@@ -77,19 +83,18 @@ def insert_clientes():
     return esquema.jsonify(restaurante)
 
 # devolvemos un cliente por la id que nos pasan
-@app.route('/cliente/<int:id>')
+@app.route('/API/restaurante/<int:id>')
 def get_restaurante(id):
     resultado = Restaurante.query.get(id)
     return esquema.jsonify(resultado) if resultado else jsonify({'error':'dato no existente'})
     
-@app.route('/delete_restaurante/<int:id>', methods=['GET'])
+@app.route('/API/delete_restaurante/<int:id>', methods=['GET'])
 def delete_client(id):
     resultado = Restaurante.query.get(id)
     db.session.delete(resultado)
     db.session.commit()
     return jsonify({'message':'registro eliminado'})
 
-# Recoger datos a traves del formulario web
 
 
 if __name__ == '__main__':
