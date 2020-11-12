@@ -14,21 +14,23 @@ CORS(app)
 db = SQLAlchemy(app)
 mm = Marshmallow(app)
 
-class Clientes(db.Model):
+class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
-    empresa = db.Column(db.String(50))
+    calle = db.Column(db.String(50))
+    comida = db.Column(db.String(50))
     
-    def __init__(self, nombre, empresa):
+    def __init__(self, nombre, calle, comida):
         self.nombre = nombre
-        self.empresa = empresa
+        self.calle = calle
+        self.comida = comida
         
 db.create_all()
         
 # con este esquema configuramos los datos a mostrar en la peticiones get
 class schema(mm.Schema):
     class Meta:
-        fields = ('id','nombre', 'empresa')  # siempre hay que darle el nombre fields sino no funciona
+        fields = ('id','nombre', 'calle', 'comida')  # siempre hay que darle el nombre fields sino no funciona
         
 esquema = schema()
 esquemas = schema(many=True)
@@ -40,47 +42,49 @@ def indice():
     mensaje = ''
     if request.method == 'POST':
         nombre = request.form['nombre']
-        empresa = request.form['empresa']
-        cliente = Clientes(nombre, empresa)
-        db.session.add(cliente)
+        calle = request.form['calle']
+        comida = request.form['comida']
+        restaurante = Restaurante(nombre, calle, comida)
+        db.session.add(restaurante)
         db.session.commit()
         mensaje = 'Registro insertado con éxito!'
     return render_template('indice.html',mensaje=mensaje)
 
 
 # con esta url instermanos datos desde Heroku por la url
-@app.route('/heroku_insert/<string:nombre>/<string:empresa>')
-def insert_heroku(nombre, empresa):
-    datos_registrados = Clientes(nombre,empresa)
+@app.route('/heroku_insert/<string:nombre>/<string:calle>/<string:comida>')
+def insert_heroku(nombre, calle, comida):
+    datos_registrados = Restaurante(nombre, calle, comida)
     db.session.add(datos_registrados)
     db.session.commit()
     return esquema.jsonify(datos_registrados)
 
 # devolvemos todos los clientes con esta petición
 @app.route('/clientes')
-def get_clientes():
-    clientes = Clientes.query.all()
-    return render_template('clientes.html', clientes=clientes)
+def get_restaurantes():
+    restaurantes = Restaurante.query.all()
+    return render_template('restaurantes.html', restaurantes=restaurantes)
 
 # Insertamos un cliente
-@app.route('/insert_cliente', methods=['POST'])
+@app.route('/insert_restaurante', methods=['POST'])
 def insert_clientes():
     nombre = request.json['nombre']
-    empresa = request.json['empresa']
-    cliente = Clientes(nombre,empresa)
-    db.session.add(cliente)
+    calle = request.json['calle']
+    comida = request.json['comida']
+    restaurante = Restaurante(nombre,calle,comida)
+    db.session.add(restaurante)
     db.session.commit()
-    return esquema.jsonify(cliente)
+    return esquema.jsonify(restaurante)
 
 # devolvemos un cliente por la id que nos pasan
 @app.route('/cliente/<int:id>')
-def get_cliente(id):
-    resultado = Clientes.query.get(id)
+def get_restaurante(id):
+    resultado = Restaurante.query.get(id)
     return esquema.jsonify(resultado) if resultado else jsonify({'error':'dato no existente'})
     
-@app.route('/delete_client/<int:id>', methods=['GET'])
+@app.route('/delete_restaurante/<int:id>', methods=['GET'])
 def delete_client(id):
-    resultado = Clientes.query.get(id)
+    resultado = Restaurante.query.get(id)
     db.session.delete(resultado)
     db.session.commit()
     return jsonify({'message':'registro eliminado'})

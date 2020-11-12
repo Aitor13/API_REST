@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="normalize.css">
-    <title>Clientes en la BD</title>
+    <title>Restaurantes</title>
 </head>
 <body>
-    <h1>Clientes existentes en la BD</h1>
+    <h1>Restaurantes guardados</h1>
     <ul>
-        {% for c in clientes %}
-        <li>Nombre: {{c.nombre}} / Empresa: {{c.empresa}}</li>
+        {% for c in restaurantes %}
+        <li>Nombre: {{c.nombre}}
+            <p>Calle: {{c.calle}}</p>
+            <p>Comida: {{c.comida}}</p>
+        </li>
         {% endfor %}
     </ul>
 </body>
