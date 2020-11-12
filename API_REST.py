@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 
-# Hecho en deployment en Heroku
+
 app = Flask(__name__)
 user = 'usuario'
 password = 'password'
@@ -72,6 +72,7 @@ def insert_clientes():
 def get_restaurante(id):
     resultado = Restaurante.query.get(id)
     return esquema.jsonify(resultado) if resultado else jsonify({'error':'dato no existente'})
+
 
 # Eliminamos un restaurante por su id
 @app.route('/API/delete_restaurante/<int:id>', methods=['DELETE'])
